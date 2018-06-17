@@ -4,6 +4,7 @@ import Router from 'vue-router';
 // PAGES
 import Debts from '../views/Debts.vue';
 import AddDebt from '../views/AddDebt.vue';
+import Users from '../views/Users.vue';
 
 Vue.use(Router);
 
@@ -20,6 +21,11 @@ export default new Router({
       path: '/adddebt',
       name: 'Add Debt',
       component: AddDebt
+    },
+    {
+      path: '/users',
+      name: 'Add User',
+      component: Users
     }
   ]
 });

@@ -17,11 +17,14 @@
                     placeholder="Amount">
                     </b-form-input>
                 </b-input-group>
-                <b-form-input v-model="name"
+                <!-- <b-form-input v-model="name"
                     type="text"
                     placeholder="Name"
                     class="mt-4">
-                    </b-form-input>
+                    </b-form-input> -->
+                  <b-form-select v-model="name" class="mb-3" />
+                    <option v-for="user in users" :value="user.name">{{ user.name }}</option>
+                  </b-form-select>
                 <b-button variant="success" class="mt-4" @click="saveDebt">Save debt</b-button>
               </b-form>
           </div>
@@ -38,6 +41,7 @@ export default {
   name: 'AddDebt',
   data() {
     return {
+      users: {},
       name: '',
       week: '',
       amount: ''
@@ -63,6 +67,9 @@ export default {
       cancelCallBack(err) {
         console.log(err);
       }
+    },
+    users: {
+      source: db.ref('users')
     }
   }
 };

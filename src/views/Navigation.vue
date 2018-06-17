@@ -8,6 +8,7 @@
         <b-navbar-nav>
         <b-nav-item href="#/">Debts <b-badge>{{ debts.length }}</b-badge></b-nav-item>
         <b-nav-item href="#/adddebt">Add new debt</b-nav-item>
+        <b-nav-item href="#/users">Users</b-nav-item>
         </b-navbar-nav>
 
     <!-- </b-collapse> -->
