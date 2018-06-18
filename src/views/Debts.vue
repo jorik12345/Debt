@@ -3,7 +3,7 @@
       <b-row class="mt-4">
           <b-col sm="12">
             <h3>Debts</h3>
-            <ul class="list-group">
+            <ul class="list-group" v-if="debts.length > 0">
                <li class="list-group-item" v-for="debt in debts" v-if="!debt.payed">
                 <h6 align="left">
                   {{ debt.name }}
@@ -15,6 +15,7 @@
                 </h6>
               </li>
             </ul>
+            <p v-else>Good job. You have no debts</p>
           </b-col>
           <b-col sm="12" class="mt-4">
             <h3>No debts</h3>

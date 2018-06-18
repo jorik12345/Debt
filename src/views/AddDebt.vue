@@ -11,7 +11,7 @@
                     placeholder="Week number">
                     </b-form-input>
                 </b-input-group>
-                <b-input-group prepend="&euro;" class="mt-4">
+                <b-input-group prepend="€" class="mt-4">
                     <b-form-input v-model="amount"
                     type="text"
                     placeholder="Amount">
@@ -22,7 +22,8 @@
                     placeholder="Name"
                     class="mt-4">
                     </b-form-input> -->
-                  <b-form-select v-model="name" class="mb-3" />
+                  <b-form-select v-model="name" class="mt-4">
+                    <option value="">Select user</option>
                     <option v-for="user in users" :value="user.name">{{ user.name }}</option>
                   </b-form-select>
                 <b-button variant="success" class="mt-4" @click="saveDebt">Save debt</b-button>
