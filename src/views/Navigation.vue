@@ -1,19 +1,23 @@
 <template>
-    <b-navbar class="navigation" toggleable="md" type="dark" variant="dark">
-
-    <!-- <b-navbar-toggle target="nav_collapse"></b-navbar-toggle> -->
-
-    <!-- <b-collapse is-nav id="nav_collapse"> -->
-
-        <b-navbar-nav>
-        <b-nav-item href="#/">Debts <b-badge>{{ debts.length }}</b-badge></b-nav-item>
-        <b-nav-item href="#/adddebt">Add new debt</b-nav-item>
-        <b-nav-item href="#/users">Users</b-nav-item>
-        </b-navbar-nav>
-
-    <!-- </b-collapse> -->
-    </b-navbar>
-    
+    <div class="text-xs-center">
+        <v-bottom-nav :value="true" absolute color="transparent" shift>
+        <v-badge color="blue" overlap>
+            <span slot="badge">{{ debts.length }}</span>
+            <v-btn flat color="teal" href="#/">
+                <span>Debts</span>
+                <v-icon>list</v-icon>
+            </v-btn>
+        </v-badge>
+        <v-btn flat color="teal" href="#/adddebt">
+            <span>Add Debt</span>
+            <v-icon>add</v-icon>
+        </v-btn>
+        <v-btn flat color="teal" href="#/users">
+            <span>Users</span>
+            <v-icon>person</v-icon>
+        </v-btn>
+        </v-bottom-nav>
+    </div>
 </template>
 
 <script>

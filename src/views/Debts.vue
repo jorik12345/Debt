@@ -1,5 +1,28 @@
 <template>
-  <b-container class="fluid">
+
+  <v-expansion-panel>
+    <v-expansion-panel-content v-for="(debt,i) in debts" :key="i" expand-icon="mdi-menu-down">
+      <div slot="header">
+        {{ debt.name }}
+        <v-chip color="primary" text-color="white" class="right">&euro;{{ debt.amount }}</v-chip>
+        <v-chip color="green" text-color="white" class="right">Week {{ debt.week }}</v-chip>
+      </div>
+      <v-card>
+        <v-card-text class="grey lighten-3">
+          <v-layout>
+                <v-btn flat>
+                  One
+                </v-btn>
+                <v-btn flat>
+                  Two
+                </v-btn>
+          </v-layout>
+        </v-card-text>
+      </v-card>
+    </v-expansion-panel-content>
+  </v-expansion-panel>
+
+  <!-- <b-container class="fluid">
       <b-row class="mt-4">
           <b-col sm="12">
             <h3>Debts</h3>
@@ -34,7 +57,7 @@
             </ul>
           </b-col>
       </b-row>
-  </b-container>
+  </b-container> -->
 </template>
 
 <script>
