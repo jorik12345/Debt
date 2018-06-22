@@ -1,6 +1,7 @@
 import './firebase'
 import Vue from 'vue'
 import VueFire from 'vuefire'
+import Vuetify from 'vuetify'
 import BootstrapVue from "bootstrap-vue"
 import App from './App.vue'
 import router from './router';
@@ -10,6 +11,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 
 Vue.use(BootstrapVue)
 Vue.use(VueFire)
+Vue.use(Vuetify)
 
 new Vue({
   el: '#app',

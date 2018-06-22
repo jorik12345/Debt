@@ -1,9 +1,29 @@
 <template>
   <div id="app">
-    <figure class="logo"><img src="./assets/logo.svg"></figure>
-    
-    <navbar class="navbar"></navbar>
-    <router-view></router-view>
+    <v-app>
+      <v-content>
+        <v-container>
+          <figure class="logo"><img src="./assets/logo.svg"></figure>
+          
+          
+          <router-view></router-view>
+        </v-container>
+      </v-content>
+      <v-bottom-nav absolute="true">
+        <v-btn flat color="teal" value="recent">
+          <span>Recent</span>
+          <v-icon>history</v-icon>
+        </v-btn>
+        <v-btn flat color="teal" value="favorites">
+          <span>Favorites</span>
+          <v-icon>favorite</v-icon>
+        </v-btn>
+        <v-btn flat color="teal" value="nearby">
+          <span>Nearby</span>
+          <v-icon>place</v-icon>
+        </v-btn>
+      </v-bottom-nav>
+    </v-app>
   </div>
 </template>
 
