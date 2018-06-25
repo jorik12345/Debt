@@ -1,9 +1,9 @@
 <template>
-  <b-container>
-    <b-row class="justify-content-center">
-      <b-col>
-        <b-card bg-variant="white" text-variant="dark" title="Add a debt user" align="center">
-            <b-card-body class="text-center">
+  <v-container>
+    <v-layout justify-content-center>
+      <v-flex xs12 md6>
+        <v-card bg-variant="white" text-variant="dark" title="Add a debt user" align="center">
+            <v-card-title class="text-center">
             <div>
                 <b-form>
                     <b-input-group prepend="Name">
@@ -21,11 +21,11 @@
                     <b-button variant="success" class="mt-4" @click="saveUser">Save user</b-button>
                 </b-form>
             </div>
-            </b-card-body>
-        </b-card>
-      </b-col>  
+            </v-card-title>
+        </v-card>
+      </v-flex>  
 
-        <b-col>
+        <v-flex xs12 md6>
             <h3>Users</h3>
             <ul class="list-group">
                 <li class="list-group-item" v-for="user in users">
@@ -37,9 +37,9 @@
                 </h6>
                 </li>
             </ul>
-        </b-col>
-    </b-row>
-  </b-container>
+        </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

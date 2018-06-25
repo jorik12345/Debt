@@ -4,11 +4,8 @@
       <v-content>
         <v-container>
           <figure class="logo"><img src="./assets/logo.svg"></figure>
-          
-          
           <router-view></router-view>
         </v-container>
-
       </v-content>
       <navbar></navbar>
     </v-app>
@@ -34,7 +31,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 

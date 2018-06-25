@@ -1,38 +1,45 @@
 <template>
-  <b-container>
-    <b-row class="justify-content-center">
-      <b-card bg-variant="white" text-variant="dark" title="Add a debt" align="center">
-        <b-card-body class="text-center">
-          <div>
-              <b-form>
-                <b-input-group prepend="Week">
-                    <b-form-input v-model="week"
-                    type="text"
-                    placeholder="Week number">
-                    </b-form-input>
-                </b-input-group>
-                <b-input-group prepend="€" class="mt-4">
-                    <b-form-input v-model="amount"
-                    type="text"
-                    placeholder="Amount">
-                    </b-form-input>
-                </b-input-group>
-                <!-- <b-form-input v-model="name"
-                    type="text"
-                    placeholder="Name"
-                    class="mt-4">
-                    </b-form-input> -->
-                  <b-form-select v-model="name" class="mt-4">
-                    <option value="">Select user</option>
-                    <option v-for="user in users" :value="user.name">{{ user.name }}</option>
-                  </b-form-select>
-                <b-button variant="success" class="mt-4" @click="saveDebt">Save debt</b-button>
-              </b-form>
-          </div>
-        </b-card-body>
-      </b-card>
-    </b-row>
-  </b-container>
+  <v-container grid-list-md text-xs-center>
+      <v-layout justify-center row wrap>
+            <v-flex xs6>
+              <v-card>
+                <v-card-title>
+                  <v-form>
+                    <h2>Add debts</h2>
+                    <v-flex xs12>
+                      <v-text-field
+                        name="week"
+                        label="Week"
+                        v-model="week"
+                        mask="##"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-text-field
+                        name="amount"
+                        label="Amount"
+                        prefix="€"
+                        v-model="amount"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-select
+                        v-model="name"
+                        :items="users"
+                        item-text="name"
+                        item-value="name"
+                        label="Select"
+                        single-line>
+                      </v-select>
+                    </v-flex>
+
+                    <v-btn class="mt-4 p-0" @click="saveDebt">Save debt</v-btn>
+                </v-form>
+              </v-card-title>
+            </v-card>
+          </v-flex>
+      </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -70,8 +77,14 @@ export default {
       }
     },
     users: {
-      source: db.ref('users')
+      source: db.ref('users').orderByChild('name')
     }
   }
 };
 </script>
+
+<style scoped>
+  form {
+    width: 100%;
+  }
+</style>

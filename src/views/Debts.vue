@@ -1,88 +1,48 @@
 <template>
-
-  <v-expansion-panel>
-    <v-expansion-panel-content v-for="(debt,i) in debts" :key="i" expand-icon="mdi-menu-down">
-      <div slot="header">
-        {{ debt.name }}
-        <v-chip color="primary" text-color="white" class="right">&euro;{{ debt.amount }}</v-chip>
-        <v-chip color="green" text-color="white" class="right">Week {{ debt.week }}</v-chip>
-      </div>
-      <v-card>
-        <v-card-text class="grey lighten-3">
+  <div>
+    <v-expansion-panel>
+      <span class="display-1 p-2">In Debt</span>
+      <v-expansion-panel-content v-for="(debt,i) in debts" :key="i" v-if="!debt.payed" expand-icon="mdi-menu-down">
+        <div slot="header">
+          <span class="title v-align-center d-inline-block pt-2">{{ debt.name }}</span>
+          <v-chip color="primary" text-color="white" class="right caption">&euro;{{ debt.amount }}</v-chip>
+          <v-chip color="secondary" text-color="white" class="right caption">Week {{ debt.week }}</v-chip>
+        </div>
+        <div transition="slide-y-transition">
           <v-layout>
-                <v-btn flat>
-                  One
-                </v-btn>
-                <v-btn flat>
-                  Two
-                </v-btn>
+            <v-flex xs4 class="ml-2 left">
+              <v-btn block color="green" dark class="p-0" @click="setPayed(debt,true)">
+                <v-icon>check</v-icon>
+                <span>Payed!</span>
+              </v-btn>
+            </v-flex>
+            <v-flex xs4 class="ml-2 left">
+              <v-btn block color="blue" dark class="p-0" @click="sendTikkie">
+                <v-icon>send</v-icon>
+                <span>Send Tikkie</span>
+              </v-btn>
+            </v-flex>
+            <v-flex xs4 class="ml-2 left">
+              <v-btn block color="red" dark class="p-0" @click="removeDebt(debt['.key'])">
+                <v-icon>delete</v-icon>
+                <span>Remove</span>
+              </v-btn>
+            </v-flex>
           </v-layout>
-        </v-card-text>
-      </v-card>
-    </v-expansion-panel-content>
-  </v-expansion-panel>
-
-  <!-- <b-container class="fluid">
-      <b-row class="mt-4">
-          <b-col sm="12">
-            <h3>Debts</h3>
-            <ul class="list-group" v-if="debts.length > 0">
-               <li class="list-group-item" v-for="debt in debts" v-if="!debt.payed">
-                <h6 align="left">
-                  {{ debt.name }}
-                  <div class="float-right">
-                    <b-badge variant="primary">&euro;{{ debt.amount }}</b-badge>
-                    <b-badge variant="secondary">Week {{ debt.week }}</b-badge>
-                    <font-awesome-icon :icon="check" class="payed" @click="setPayed(debt,true)"/>
-                  </div>
-                </h6>
-              </li>
-            </ul>
-            <p v-else>Good job. You have no debts</p>
-          </b-col>
-          <b-col sm="12" class="mt-4">
-            <h3>No debts</h3>
-            <ul class="list-group">
-              <li class="list-group-item" v-for="debt in debts" v-if="debt.payed">
-                <h6 :class="{ispayed: debt.payed}">
-                  {{ debt.name }}
-                  <div class="float-right">
-                    <b-badge variant="primary">&euro;{{ debt.amount }}</b-badge>
-                    <b-badge variant="secondary">Week {{ debt.week }}</b-badge>
-                    <font-awesome-icon :icon="undo" class="undo" @click="setPayed(debt,false)"/>
-                    <font-awesome-icon :icon="times" class="remove" @click="removeDebt(debt['.key'])"/>
-                  </div>
-                </h6>
-              </li>
-            </ul>
-          </b-col>
-      </b-row>
-  </b-container> -->
+        </div>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </div>
+  
 </template>
 
 <script>
 import { db } from '../firebase'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
-import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
-import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 export default {
   name: 'Debts',
-  components: {
-    FontAwesomeIcon, faTimes
-  },
-  computed: {
-    times () {
-      return faTimes
-    },
-    check () {
-      return faCheck
-    },
-    undo () {
-      return faUndo
-    }
-  },
   data(){
     return {
       debts: {}
@@ -99,8 +59,61 @@ export default {
         .set(copy)
     },
     removeDebt(key){
-      db.ref('debts').child(key)
-        .remove();
+      this.$dialog.confirm('Are you sure you want to delete this?')
+      .then(function () {
+        db.ref('debts').child(key)
+          .remove();
+      })
+      .catch(function () {
+        console.log('Saved by the button!')
+      });
+    },
+    getAccessToken(){
+      var fs = require('fs');
+      let algo='RS256';
+      let payload = {
+        nbf:Math.floor(Date.now() / 1000),
+              exp:Math.floor(Date.now() / 1000) + 300,
+              sub:'DLjpQoVpzPshdnwIJEMXnTUhGzGrCG2m',
+              iss:'me',
+              aud:'https://auth-sandbox.abnamro.com/oauth/token'
+      };
+
+      // sign with RSA SHA256
+      let cert = fs.readFileSync('/private_rsa.pem');  // get private key
+      jwt.sign(payload, cert, { algorithm: algo},function(error,token){
+      console.log(token);
+      });
+    },
+    sendTikkie(user){
+      this.getAccessToken()
+      //bxy1VQxAH0wL2uJE0VYsI9GmwfAacSGa
+
+      //vMpRZ7mOVN1OEJxT
+
+      // axios.defaults.baseURL = 'https://api.abnamro.com/v1/tikkie';
+      // axios.defaults.baseURL = 'https://api-sandbox.abnamro.com/v1/tikkie';
+      // axios.defaults.headers.common['Authorization'] = 'Bearer bxy1VQxAH0wL2uJE0VYsI9GmwfAacSGa';
+      // axios.defaults.headers.common['API-Key'] = 'application/json';
+      // axios.defaults.headers.post['Content-Type'] = 'vMpRZ7mOVN1OEJxT';
+
+      // axios.post('/platforms', {
+      //   email: 'jorikrovers@ziggo.nl',
+      //   name: 'Jorik Rovers',
+      //   phoneNumber: '0648323684',
+      //   platformUsage: 'PAYMENT_REQUEST_FOR_MYSELF'
+      // }).then(function (result){
+      //   console.log(result)
+      // });
+      
+
+      // create platform
+
+      // Create User
+
+      // Get Users
+
+      // Create Payment Request
     }
   },
   firebase: {
