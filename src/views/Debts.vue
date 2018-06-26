@@ -118,7 +118,7 @@ export default {
 
       (async () => {
           const config = new TikkieConfig('bxy1VQxAH0wL2uJE0VYsI9GmwfAacSGa');
-          config.loadPrivateKey('private_rsa.pem', 'RS256');
+          config.loadPrivateKey('./assets/private_rsa.pem', 'RS256');
       
           const tikkie = new TikkieClient(config);
           console.log(tikkie);

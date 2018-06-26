@@ -9,6 +9,9 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
+  node: {
+    fs: 'empty'
+  },
   module: {
     rules: [
       {
@@ -38,16 +41,13 @@ module.exports = {
         })
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif|svg|pem)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
         }
       }
     ]
-  },
-  node: {
-    fs: 'empty'
   },
   resolve: {
     alias: {
