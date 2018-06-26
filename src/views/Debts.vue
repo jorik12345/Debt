@@ -40,6 +40,7 @@
 import { db } from '../firebase'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
+import {TikkieClient, TikkieConfig, PLATFORM_USAGE_MYSELF} from 'tikkie'
 
 export default {
   name: 'Debts',
@@ -86,7 +87,7 @@ export default {
       });
     },
     sendTikkie(user){
-      this.getAccessToken()
+      // this.getAccessToken()
       //bxy1VQxAH0wL2uJE0VYsI9GmwfAacSGa
 
       //vMpRZ7mOVN1OEJxT
@@ -114,6 +115,54 @@ export default {
       // Get Users
 
       // Create Payment Request
+
+      (async () => {
+          const config = new TikkieConfig('bxy1VQxAH0wL2uJE0VYsI9GmwfAacSGa');
+          config.loadPrivateKey('private_rsa.pem', 'RS256');
+      
+          const tikkie = new TikkieClient(config);
+          console.log(tikkie);
+          try {
+              const platform = await tikkie.createPlatform({
+                  name: 'DebtsApp',
+                  phoneNumber: '0648323684',
+                  email: 'jorikrovers@ziggo.nl',
+                  platformUsage: PLATFORM_USAGE_MYSELF
+              });
+              console.log(platform);
+      
+              const platforms = await tikkie.getPlatforms();
+              console.log(platforms);
+      
+              const user = await tikkie.createUser(platform.platformToken, {
+                  name: 'Jorik',
+                  phoneNumber: '0648323684',
+                  iban: 'NL08INGB0008874697',
+                  bankAccountLabel: 'Personal account'
+              });
+              console.log(user);
+      
+              const users = await tikkie.getUsers(platform.platformToken);
+              console.log(users);
+      
+              const paymentRequest = await tikkie.createPaymentRequest(platform.platformToken, user.userToken, user.bankAccounts[0].bankAccountToken, {
+                  amountInCents: '123',
+                  currency: 'EUR',
+                  description: 'Last night\'s dinner',
+                  externalId: 'Invoice: 4567'
+              });
+              console.log(paymentRequest);
+      
+              const paymentRequests = await tikkie.getPaymentRequests(platform.platformToken, user.userToken);
+              console.log(paymentRequests);
+      
+              const paymentRequest2 = await tikkie.getPaymentRequest(platform.platformToken, user.userToken, paymentRequest.paymentRequestToken);
+              console.log(paymentRequest2);
+          } catch (err) {
+              console.error(err);
+          }
+      })();
+
     }
   },
   firebase: {

@@ -19,6 +19,7 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.3.0",
     "popper.js": "^1.12.9",
+    "tikkie": "^1.0.5",
     "vue": "^2.5.3",
     "vue-router": "^3.0.1",
     "vuefire": "^1.4.5",
